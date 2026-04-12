@@ -1,0 +1,18 @@
+name: Get Unity License File 🔑
+on: workflow_dispatch
+
+jobs:
+  activation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Request activation file
+        uses: game-ci/unity-request-activation-file@v3
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: activation-file
+          path: ./*.alf
