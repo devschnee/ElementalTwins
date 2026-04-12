@@ -26,7 +26,7 @@ public class Rock : MonoBehaviour
   void InstantReset()
   {
     // eliminate physics effect
-    rb.velocity = Vector2.zero;
+    rb.linearVelocity = Vector2.zero;
     rb.angularVelocity = 0f;
 
     transform.position = originalPos;
@@ -38,7 +38,7 @@ public class Rock : MonoBehaviour
   {
     if (collision.gameObject.CompareTag("Wall"))
     {
-      Vector2 currDir = rb.velocity.normalized;
+      Vector2 currDir = rb.linearVelocity.normalized;
       if (currDir == Vector2.zero)
       {
         currDir = -collision.contacts[0].normal;

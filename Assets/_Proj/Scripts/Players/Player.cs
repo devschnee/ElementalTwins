@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
   {
     if (isKnocback) return;
     float x = Input.GetAxisRaw("Horizontal");
-    float currSpeed = rb.velocity.x;
+    float currSpeed = rb.linearVelocity.x;
     if (x != 0)
     {
       lastDir = (int)Mathf.Sign(x);
@@ -96,27 +96,27 @@ public class Player : MonoBehaviour
     {
       if (Mathf.Sign(currSpeed) == Mathf.Sign(x) || x == 0)
       {
-        rb.velocity = new Vector2(currSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(currSpeed, rb.linearVelocity.y);
       }
       else if(Mathf.Sign(currSpeed) != Mathf.Sign(x) && x != 0)
       {
         float smoothX = Mathf.Lerp(currSpeed, targetSpeed, reduceSpeed);
-        rb.velocity = new Vector2(smoothX, rb.velocity.y);
+        rb.linearVelocity = new Vector2(smoothX, rb.linearVelocity.y);
       }
       else if(x == 0)
       {
         float smoothX = Mathf.MoveTowards(currSpeed, targetSpeed, reduceSpeed);
-        rb.velocity = new Vector2(smoothX, rb.velocity.y);
+        rb.linearVelocity = new Vector2(smoothX, rb.linearVelocity.y);
       }
     }
     else
-      rb.velocity = new Vector2(targetSpeed, rb.velocity.y);
+      rb.linearVelocity = new Vector2(targetSpeed, rb.linearVelocity.y);
 
     anim.SetBool("isWalk", x != 0 && isGrounded);
 
     if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
     {
-      rb.velocity = new Vector2(rb.velocity.x, 0f);
+      rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
       rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
       isGrounded = false;
       anim.SetBool("isJump", !isGrounded);
@@ -173,7 +173,7 @@ public class Player : MonoBehaviour
   {
     if(collision.gameObject.layer == LayerMask.NameToLayer("PlayerBlock"))
     {
-      rb.velocity = new Vector2(-1f, rb.velocity.y);
+      rb.linearVelocity = new Vector2(-1f, rb.linearVelocity.y);
     }
   }
   IEnumerator SetParentDelay(Transform newP)
@@ -306,7 +306,7 @@ public class Player : MonoBehaviour
       transform.position = respawnPoint2.position;
     }
 
-    rb.velocity = Vector2.zero;
+    rb.linearVelocity = Vector2.zero;
     if (anim != null)
     {
       anim.enabled = true;
@@ -340,7 +340,7 @@ public class Player : MonoBehaviour
     if (rb != null && rb.bodyType == RigidbodyType2D.Dynamic && rb.simulated)
     {
       isKnocback = true;
-      rb.velocity = Vector2.zero;
+      rb.linearVelocity = Vector2.zero;
       rb.AddForce(dir * force, ForceMode2D.Impulse);
       Debug.Log("[Knockback] Force applied!");
       StartCoroutine(ResetKnockback());

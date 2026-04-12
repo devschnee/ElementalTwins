@@ -22,7 +22,7 @@ public class Projectiles : MonoBehaviour
   {
     if (rb != null)
     {
-      rb.velocity = direction.normalized * speed;
+      rb.linearVelocity = direction.normalized * speed;
     }
   }
 

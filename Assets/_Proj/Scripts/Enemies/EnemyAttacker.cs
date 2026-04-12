@@ -230,7 +230,7 @@ public class EnemyAttacker : Enemy
       Destroy(projGO);
       return;
     }
-    projRb.velocity = dir * projSpeed;
+    projRb.linearVelocity = dir * projSpeed;
 
     DebuffProjectile debuffProj = projGO.GetComponent<DebuffProjectile>();
     if (debuffProj == null)
